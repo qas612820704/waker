@@ -1,15 +1,15 @@
-import React from 'react';
+import React from "react"
 import styled from '@emotion/styled';
-import Todos from './components/Todos';
-import Layout from './layout';
+import Layout from '../layout';
+import Todos from '../components/Todos';
 
-const Wrapper = styled.div`
+const Wrapper = styled.main`
   h1 {
     text-align: center;
   }
 `;
 
-export default function App() {
+export default function Index() {
   return (
     <Layout>
       <Wrapper>
@@ -17,5 +17,5 @@ export default function App() {
         <Todos />
       </Wrapper>
     </Layout>
-  );
+  )
 }

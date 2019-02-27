@@ -1,6 +1,8 @@
 /* globals self, serviceWorkerOption */
 /* eslint no-restricted-globals: 1 */
 
+console.log(serviceWorkerOption);
+
 self.addEventListener('install', console.log);
 self.addEventListener('activate', console.log);
 self.addEventListener('message', console.log);

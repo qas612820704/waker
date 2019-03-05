@@ -1,20 +1,9 @@
-import uuid from 'uuid/v4';
-import { omitBy } from 'lodash';
 import * as moment from 'moment';
 import * as $ from './constants';
 
 export function restoreTodos() {
-  return async (dispatch, getState, { db }) => {
-    const withDeletedTodos = await db
-      .allDocs({
-        include_docs: true,
-      })
-      .then(result => result.rows)
-      .then(rows => rows.map(row => row.doc));
-
-    const todos = withDeletedTodos
-      .filter(todo => !todo.deletedAt)
-      .map(todo => omitBy(todo, '_rev'));
+  return async (dispatch, getState, { api }) => {
+    const todos = await api.get('/todos');
 
     dispatch({
       type: $.RESTORE_TODOS,
@@ -26,12 +15,11 @@ export function restoreTodos() {
 }
 
 export function addTodo(fields) {
-  return async (dispatch) => {
-    const todo = {
-      _id: uuid(),
+  return async (dispatch, getState, { api }) => {
+    const todo = await api.post('/todos', {
       alertAt: moment().add(30, 'minute').toISOString(),
       ...fields,
-    };
+    });
 
     dispatch({
       type: $.ADD_TODO,

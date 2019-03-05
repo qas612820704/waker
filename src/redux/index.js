@@ -1,6 +1,7 @@
 import { createStore as reduxCreateStore, compose, applyMiddleware } from "redux"
 import thunk from 'redux-thunk';
 import db from '../pouchdb';
+import api from '../api';
 import reducer from './reducer';
 
 const devtools = process.env.NODE_ENV === 'development'
@@ -9,6 +10,7 @@ const devtools = process.env.NODE_ENV === 'development'
 
 export const createStore = () => reduxCreateStore(reducer, compose(
   applyMiddleware(thunk.withExtraArgument({
+    api,
     db,
   })),
   devtools,

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { useMappedState, useDispatch } from 'redux-react-hook';
+import { useMappedState, useDispatch } from '../reduplex';
 import { MdNotifications, MdNotificationsNone } from 'react-icons/md';
 import styled from '@emotion/styled';
 import { toggleNotificationAvailability } from '../redux/actions';

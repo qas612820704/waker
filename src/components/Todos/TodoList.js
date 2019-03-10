@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { useMappedState } from 'redux-react-hook';
+import { useMappedState } from '../../reduplex';
 import TodoItem from './TodoItem';
 
 export default function TodoList() {

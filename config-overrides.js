@@ -10,7 +10,7 @@ module.exports = {
 
     config.plugins.push(
       new ServiceWorkerWebpackPlugin({
-        entry: path.join(__dirname, 'src/service-worker.js'),
+        entry: path.join(__dirname, 'src/service-worker/index.js'),
       }),
     );
 

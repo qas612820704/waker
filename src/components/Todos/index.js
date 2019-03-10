@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'redux-react-hook';
+import { useDispatch } from '../../reduplex';
 import styled from '@emotion/styled';
 import TodoHeader from './TodoHeader';
 import TodoList from './TodoList';

@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { useMappedState, useDispatch } from 'redux-react-hook';
+import { useMappedState, useDispatch } from '../../reduplex';
 import styled from '@emotion/styled';
 import { css } from '@emotion/core';
 import TodoInput from './TodoInput';

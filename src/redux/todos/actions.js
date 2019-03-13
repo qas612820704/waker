@@ -1,10 +1,12 @@
 import uuid from 'uuid/v4';
 import * as moment from 'moment';
+import { syncTodo } from '../../api/sync';
 import * as $ from './constants';
 
 export function restoreTodos() {
   return async (dispatch, getState, { api }) => {
-    const todos = await api.todos.getAll();
+    const withDeletedTodos = await api.todos.getAll();
+    const todos = withDeletedTodos.filter(t => !t.deletedAt);
 
     dispatch({
       type: $.RESTORE_TODOS,
@@ -19,7 +21,7 @@ export function addTodo(fields) {
   return async (dispatch) => {
     const todo = {
       _id: uuid(),
-      alertAt: moment().add(30, 'minute').toISOString(),
+      alertAt: moment().add(10, 'second').toISOString(),
       ...fields,
     };
 
@@ -123,6 +125,7 @@ export function storeTodoRequest(todoId) {
 
     try {
       await api.todos.set(todo);
+      syncTodo(todoId);
 
       return dispatch({
         type: $.STORING_TODO_SUCCESS,

@@ -91,6 +91,19 @@ const completedAt = (state = null, action) => {
   }
 }
 
+const updateAt = (state = new Date().toISOString(), action) => {
+  switch (action.type) {
+    case $.ADD_TODO:
+    case $.ACTIVATE_TODO:
+    case $.DEACTIVATE_TODO:
+    case $.UPDATE_TODO:
+    case $.DELETE_TODO:
+      return new Date().toISOString();
+    default:
+      return state;
+  }
+}
+
 const deletedAt = (state = null, action) => {
   switch (action.type) {
     case $.DELETE_TODO:
@@ -131,6 +144,7 @@ export default combineReducers({
   isSyncing,
   alertAt,
   completedAt,
+  updateAt,
   deletedAt,
   storingErrorMessage,
   syncingErrorMessage,

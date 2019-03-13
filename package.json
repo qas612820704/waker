@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/core": "^10.0.7",
     "@emotion/styled": "^10.0.7",
+    "debug": "^4.1.1",
     "idb": "^3.0.2",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
@@ -17,7 +18,8 @@
     "redux-thunk": "^2.3.0",
     "typeface-noto-sans": "^0.0.54",
     "typography": "^0.16.18",
-    "typography-theme-wordpress-2015": "^0.16.18"
+    "typography-theme-wordpress-2015": "^0.16.18",
+    "url-pattern": "^1.0.3"
   },
   "scripts": {
     "start": "react-app-rewired start",

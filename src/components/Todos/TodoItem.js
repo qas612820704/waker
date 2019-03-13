@@ -1,7 +1,9 @@
 import React, { useCallback, useState, useRef, useEffect } from 'react';
 import { useMappedState, useDispatch } from 'redux-react-hook';
 import { css } from '@emotion/core';
+import { MdNotifications } from 'react-icons/md';
 import styled from '@emotion/styled';
+import * as moment from 'moment';
 import { activateTodo, deactivateTodo, updateTodo, deleteTodo } from '../../redux/actions';
 
 const Wrapper = styled.ol`
@@ -25,6 +27,7 @@ const Wrapper = styled.ol`
     width: 40px;
   }
   label {
+    position: relative;
     display: block;
 
     padding: 0.6em;
@@ -37,6 +40,13 @@ const Wrapper = styled.ol`
     background-position: center left;
 
     transition: color 0.5s;
+
+    span {
+      position: absolute;
+      left: 100%;
+      padding-left: 1em;
+      width: 100%;
+    }
   }
   button {
     cursor: pointer;
@@ -97,6 +107,10 @@ const Wrapper = styled.ol`
       color: #9e9e9e;
       text-decoration: line-through;
       background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%22-10%20-18%20100%20135%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2250%22%20fill%3D%22none%22%20stroke%3D%22%23bddad5%22%20stroke-width%3D%223%22/%3E%3Cpath%20fill%3D%22%235dc2af%22%20d%3D%22M72%2025L42%2071%2027%2056l-4%204%2020%2020%2034-52z%22/%3E%3C/svg%3E');
+
+      span {
+        text-decoration: line-through;
+      }
     }
   `}
   ${props => props.isEditing && css`
@@ -132,10 +146,13 @@ export default function TodoItem({ todoId }) {
       onDoubleClick={e => enableEditing(true)}
       onMouseLeave={e => enableEditing(false)}
     >
+      <label>
+        {todo.message}
+        <span><MdNotifications /> {moment(todo.alertAt).calendar()}</span>
+      </label>
       <input type="checkbox"
         onClick={!!todo.completedAt ? activateTodo : deactivateTodo}
       />
-      <label>{todo.message}</label>
       <button onClick={deleteTodo}>x</button>
       <form onSubmit={e => {
         e.preventDefault();

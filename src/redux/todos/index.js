@@ -6,7 +6,8 @@ import todo from './todo';
 const byId = (state = {}, action) => {
   switch (action.type) {
     case $.RESTORE_TODOS:
-      return mapKeys(action.payload, (todo) => todo._id);
+      const todos = action.payload.map(t => todo(t, action))
+      return mapKeys(todos, (todo) => todo._id);
 
     default:
       if (!action.type.includes('TODO'))

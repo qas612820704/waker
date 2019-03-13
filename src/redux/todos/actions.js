@@ -1,20 +1,10 @@
 import uuid from 'uuid/v4';
-import { omitBy } from 'lodash';
 import * as moment from 'moment';
 import * as $ from './constants';
 
 export function restoreTodos() {
-  return async (dispatch, getState, { db }) => {
-    const withDeletedTodos = await db
-      .allDocs({
-        include_docs: true,
-      })
-      .then(result => result.rows)
-      .then(rows => rows.map(row => row.doc));
-
-    const todos = withDeletedTodos
-      .filter(todo => !todo.deletedAt)
-      .map(todo => omitBy(todo, '_rev'));
+  return async (dispatch, getState, { api }) => {
+    const todos = await api.todos.getAll();
 
     dispatch({
       type: $.RESTORE_TODOS,
@@ -123,7 +113,7 @@ export function deactiveAllTodos(todoIds = []) {
 }
 
 export function storeTodoRequest(todoId) {
-  return async (dispatch, getState, { db }) => {
+  return async (dispatch, getState, { api }) => {
     dispatch({
       type: $.STORING_TODO_REQUEST,
       payload: { _id: todoId },
@@ -132,10 +122,7 @@ export function storeTodoRequest(todoId) {
     const todo = getState().todos.byId[todoId];
 
     try {
-      await db.upsert(todoId, (doc) => ({
-        ...doc,
-        ...todo,
-      }));
+      await api.todos.set(todo);
 
       return dispatch({
         type: $.STORING_TODO_SUCCESS,
